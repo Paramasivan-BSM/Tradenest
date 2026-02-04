@@ -4,6 +4,7 @@ import com.bsm.tradenest.config.JwtUtil;
 import com.bsm.tradenest.dao.Userdao;
 import com.bsm.tradenest.dto.*;
 import com.bsm.tradenest.enums.Role;
+import com.bsm.tradenest.exception.InvalidCredentialsException;
 import com.bsm.tradenest.model.Usermodel;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,13 @@ public class Authservice {
         Usermodel user = userdao.findByEmail(req.getEmail());
 
         if (user == null || !user.isEnabled()) {
-            throw new RuntimeException("Invalid credentials");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
 
         if (!encoder.matches(req.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
+
 
         String token = jwt.generateToken(
                 user.getEmail(),
