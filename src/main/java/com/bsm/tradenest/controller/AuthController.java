@@ -2,6 +2,7 @@ package com.bsm.tradenest.controller;
 
 import com.bsm.tradenest.dto.Authdto;
 import com.bsm.tradenest.dto.LoginRequest;
+import com.bsm.tradenest.dto.LoginResponseDto;
 import com.bsm.tradenest.dto.SignupRequest;
 import com.bsm.tradenest.model.Usermodel;
 import com.bsm.tradenest.services.Authservice;
@@ -26,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Authdto login(@RequestBody LoginRequest req) {
+    public LoginResponseDto login(@RequestBody LoginRequest req) {
         return service.login(req);
     }
 }

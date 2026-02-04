@@ -1,5 +1,6 @@
 package com.bsm.tradenest.dao;
 
+import com.bsm.tradenest.enums.Role;
 import com.bsm.tradenest.model.Usermodel;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -38,6 +39,24 @@ public class Userdao {
                 Filters.eq("role", "ROLE_ADMIN")
         ) > 0;
     }
+
+    public Usermodel findByEmail(String email) {
+
+        Document doc = collection.find(
+                Filters.eq("email", email)
+        ).first();
+
+        if (doc == null) return null;
+
+        Usermodel user = new Usermodel();
+        user.setEmail(doc.getString("email"));
+        user.setPassword(doc.getString("password"));
+        user.setRole(Role.valueOf(doc.getString("role")));
+        user.setEnabled(doc.getBoolean("enabled", true));
+
+        return user;
+    }
+
 
 
 
