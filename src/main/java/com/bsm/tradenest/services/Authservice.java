@@ -53,8 +53,29 @@ public class Authservice {
         return new Authdto("User created by admin", true);
     }
 
+//    public LoginResponseDto login(LoginRequest req) {
+//        // authenticate + issue JWT (next step)
+//        Usermodel user = userdao.findByEmail(req.getEmail());
+//
+//        if (user == null || !user.isEnabled()) {
+//            throw new InvalidCredentialsException("Invalid email or password");
+//        }
+//
+//        if (!encoder.matches(req.getPassword(), user.getPassword())) {
+//            throw new InvalidCredentialsException("Invalid email or password");
+//        }
+//
+//
+//        String token = jwt.generateToken(
+//                user.getEmail(),
+//                user.getRole().name()
+//        );
+//
+//        return new LoginResponseDto( "Login Success",true , token, user.getRole().name());
+//    }
+
     public LoginResponseDto login(LoginRequest req) {
-        // authenticate + issue JWT (next step)
+
         Usermodel user = userdao.findByEmail(req.getEmail());
 
         if (user == null || !user.isEnabled()) {
@@ -65,13 +86,17 @@ public class Authservice {
             throw new InvalidCredentialsException("Invalid email or password");
         }
 
-
         String token = jwt.generateToken(
                 user.getEmail(),
                 user.getRole().name()
         );
 
-        return new LoginResponseDto( "Login Success",true , token, user.getRole().name());
+        return new LoginResponseDto(
+                "Login Success",
+                true,
+                token,
+                user.getRole().name()
+        );
     }
 
 

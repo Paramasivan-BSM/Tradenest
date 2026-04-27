@@ -5,6 +5,7 @@ import com.bsm.tradenest.model.Usermodel;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
@@ -58,6 +59,12 @@ public class Userdao {
     }
 
 
+    public void updateRole(String email, Role newRole) {
+        collection.updateOne(
+                Filters.eq("email", email), // Find the document where email matches
+                Updates.set("role", newRole.name()) // Set the 'role' field to the new value
+        );
+    }
 
 
 

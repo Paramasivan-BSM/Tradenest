@@ -20,4 +20,25 @@ public class GlobalExceptionHandler {
                         ex.getMessage()
                 ));
     }
+
+
+
+    @ExceptionHandler(NotFoundException.class)
+    public org.springframework.http.ResponseEntity<?> handleNotFound(
+            NotFoundException ex) {
+
+        return org.springframework.http.ResponseEntity
+                .status(404)
+                .body(new ErrorResponse("NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> badRequest(BadRequestException ex) {
+        return ResponseEntity.badRequest()
+                .body(ex.getMessage());
+    }
+
+
+
+
 }
